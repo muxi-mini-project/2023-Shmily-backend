@@ -1,4 +1,0 @@
-local_name: shmily
-run mode: debug
-addr: 127.0.0.1:80080
-url: http://127.0.0.1:8080
