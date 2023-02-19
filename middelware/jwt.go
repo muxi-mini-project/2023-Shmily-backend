@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"2023-Shmily-bakend/pkg/utils"
-	"2023-Shmily-bakend/serializer"
 	"github.com/gin-gonic/gin"
+	"shmily/pkg/utils"
+	"shmily/serializer"
 	"time"
 )
 
@@ -18,7 +18,7 @@ func JWT() gin.HandlerFunc {
 			claim, err := utils.ParseToken(token)
 			if err != nil {
 				code = 403 //token错误，无权限
-			} else if time.Now().Unix() > claim.ExpireseAt {
+			} else if time.Now().Unix() > claim.ExpiresAt {
 				code = 401 //token过期
 			}
 			//1)token对不对

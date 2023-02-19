@@ -1,8 +1,8 @@
 package api
 
 import (
-	"2023-Shmily-bakend/service"
 	"github.com/gin-gonic/gin"
+	"shmily/service"
 )
 
 func UserLogin(c *gin.Context) {

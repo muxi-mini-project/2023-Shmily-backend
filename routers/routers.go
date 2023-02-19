@@ -1,10 +1,10 @@
 package routers
 
 import (
-	"2023-Shmily-bakend/api"
-	"2023-Shmily-bakend/middelware"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"shmily/api"
+	"shmily/middelware"
 )
 
 //func fun1(c *gin.Context) {

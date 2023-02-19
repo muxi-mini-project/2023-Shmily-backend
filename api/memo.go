@@ -1,10 +1,10 @@
 package api
 
 import (
-	"2023-Shmily-bakend/pkg/utils"
-	"2023-Shmily-bakend/serializer"
-	"2023-Shmily-bakend/service"
 	"github.com/gin-gonic/gin"
+	"shmily/pkg/utils"
+	"shmily/serializer"
+	"shmily/service"
 )
 
 func CreateMemo(c *gin.Context) {

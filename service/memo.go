@@ -1,8 +1,8 @@
 package service
 
 import (
-	"2023-Shmily-bakend/model"
-	"2023-Shmily-bakend/serializer"
+	"shmily/model"
+	"shmily/serializer"
 )
 
 type CreateMemoService struct {
