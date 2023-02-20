@@ -30,7 +30,11 @@ func NewRouter() *gin.Engine {
 	authed := v1.Group("/")
 	authed.Use(middleware.JWT())
 	{
-		authed.POST("/memo", api.CreateMemo)
+		authed.POST("memo", api.CreateMemo)
+		authed.GET("memo/:id", api.ShowMemo)
+		authed.GET("memo/list", api.ListMemo)
+
+		authed.POST("event", api.CreateEvent)
 	}
 
 	r.GET("/ping", func(c *gin.Context) {

@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type Anniversary struct {
+type Event struct {
 	gorm.Model
 	User    User   `gorm:"ForeignKey:Uid"`
 	Uid     uint   `gorm:"not null"`

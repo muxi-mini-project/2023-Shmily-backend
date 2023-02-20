@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"shmily/pkg/utils"
 	"shmily/serializer"
@@ -25,4 +26,19 @@ func CreateMemo(c *gin.Context) {
 	//1）验证token权限
 	//2）解析网络传过来的小纸条数据
 	//3）保存到数据库
+}
+
+func ShowMemo(c *gin.Context) {
+	var showMemo service.ShowMemoService
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	fmt.Println(c.Param("id"))
+	res := showMemo.Show(claim.Id, c.Param("id"))
+	c.JSON(200, res)
+}
+
+func ListMemo(c *gin.Context) {
+	var showMemo service.ShowMemoService
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	res := showMemo.List(claim.Id)
+	c.JSON(200, res)
 }
