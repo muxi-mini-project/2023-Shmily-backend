@@ -9,9 +9,9 @@ import (
 
 var DB *gorm.DB
 
-func Database() {
-	dns := "root:wyy666@tcp(124.223.28.250:3306)/shmily?charset=utf8mb4&parseTime=true"
+func Database(dns string) {
 	db, err := gorm.Open("mysql", dns)
+
 	if err != nil {
 		panic("Mysql连接错误")
 	} else {

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"shmily/model"
+	"shmily/conf"
 	"shmily/routers"
 )
 
 func main() {
-	model.Database()
+	conf.Init()
 
 	r := routers.NewRouter()
 
