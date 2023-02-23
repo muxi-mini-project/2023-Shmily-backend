@@ -51,7 +51,7 @@ func (service *ShowMemoService) Show(uid uint, tid string) serializer.Response {
 
 	return serializer.Response{
 		Status: 200,
-		Data:   memo,
+		Data:   serializer.BuildMemo(memo),
 		Msg:    "查询成功",
 	}
 }
@@ -67,7 +67,7 @@ func (service *ShowMemoService) List(uid uint) serializer.Response {
 	}
 	return serializer.Response{
 		Status: 200,
-		Data:   memos,
+		Data:   serializer.BuildMemos(memos),
 		Msg:    "查询成功",
 	}
 }
