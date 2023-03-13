@@ -12,7 +12,7 @@ func BuildMemo(item model.Memo) Memo {
 	return Memo{
 		ID:      item.ID,
 		Color:   item.Color,
-		Content: item.Color,
+		Content: item.Content,
 	}
 }
 

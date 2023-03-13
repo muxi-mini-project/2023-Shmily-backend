@@ -8,6 +8,16 @@ import (
 	"shmily/service"
 )
 
+// @Summary      create a memo
+// @Description  get a memo
+// @Tags         memos
+// @Accept       json
+// @Produce      json
+// @Param		 memo body service.CreateMemoService true "小纸条"
+// @Success      200  {string}  string"{"msg": "创建成功"}"
+// @Failure      400  {string}  string"{"msg": "创建失败"}"
+// @Router       /api/v1/memo [post]
+
 func CreateMemo(c *gin.Context) {
 	var memo service.CreateMemoService
 	if err := c.ShouldBind(&memo); err == nil {
@@ -28,6 +38,16 @@ func CreateMemo(c *gin.Context) {
 	//3）保存到数据库
 }
 
+// @Summary      Show a memo
+// @Description  get a memo
+// @Tags         memos
+// @Accept       json
+// @Produce      json
+// @Param		 memo body service.CreateMemoService true "小纸条"
+// @Success      200  {string}  string"{"msg": "查询成功"}"
+// @Failure      400  {string}  string"{"msg": "查询失败"}"
+// @Router       /api/v1/memo/:id [get]
+
 func ShowMemo(c *gin.Context) {
 	var showMemo service.ShowMemoService
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
@@ -35,6 +55,16 @@ func ShowMemo(c *gin.Context) {
 	res := showMemo.Show(claim.Id, c.Param("id"))
 	c.JSON(200, res)
 }
+
+// @Summary      Show memos
+// @Description  get memos
+// @Tags         memos
+// @Accept       json
+// @Produce      json
+// @Param		 memo body service.CreateMemoService true "小纸条"
+// @Success      200  {string}  string"{"msg": "查询成功"}"
+// @Failure      400  {string}  string"{"msg": "查询失败"}"
+// @Router       /api/v1/memo/list [get]
 
 func ListMemo(c *gin.Context) {
 	var showMemo service.ShowMemoService

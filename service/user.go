@@ -68,6 +68,7 @@ func (service *UserService) Register() serializer.Response {
 			Msg:    err.Error(),
 		}
 	}
+
 	//3）注册保存到数据库
 	err := model.DB.Create(&user).Error
 	if err != nil {

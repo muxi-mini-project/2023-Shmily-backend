@@ -7,6 +7,16 @@ import (
 	"shmily/service"
 )
 
+// @Summary      Create an event
+// @Description  get events
+// @Tags         events
+// @Accept       json
+// @Produce      json
+// @Param		 event body service.CreateEventService true "纪念日"
+// @Success      200  {string}  string"{"msg": "创建成功"}"
+// @Failure      400  {string}  string"{"msg": "创建失败"}"
+// @Router       /api/v1/event [post]
+
 func CreateEvent(c *gin.Context) {
 	var event service.CreateEventService
 	err := c.ShouldBind(&event)
