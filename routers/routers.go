@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"shmily/api"
 	"shmily/middelware"
@@ -24,7 +23,16 @@ func NewRouter() *gin.Engine {
 	v1 := r.Group("api/v1")
 	{
 		v1.POST("user/register", api.UserRegister)
+		v1.POST("user/register/email", api.UserRegisterByEmail)
+		v1.POST("user/verify", api.UserVerify)
+		v1.POST("user/password", api.UserRegisterSetPassword)
+
+		v1.POST("user/forget/password", api.UserForgetPassword)
+		v1.POST("user/reset/password", api.UserResetPassword)
+
 		v1.POST("user/login", api.UserLogin)
+
+		v1.POST("usr/verify", api.Verify)
 	}
 
 	authed := v1.Group("/")
@@ -36,33 +44,6 @@ func NewRouter() *gin.Engine {
 
 		authed.POST("event", api.CreateEvent)
 	}
-
-	r.GET("/ping", func(c *gin.Context) {
-		fmt.Println("ping success")
-		c.JSON(200, gin.H{
-			"status": "ok",
-			"token":  "sdfjkl",
-		})
-	})
-
-	r.POST("/ping", func(c *gin.Context) {
-		type User struct {
-			Email    string `json:"email"`
-			Password string `json:"password"`
-		}
-		var user User
-		err := c.ShouldBind(&user)
-		if err != nil {
-			c.JSON(400, gin.H{
-				"status": "failed",
-				"msg":    "unknow",
-			})
-		} else {
-			c.JSON(200, gin.H{
-				"status": "success",
-			})
-		}
-	})
 
 	return r
 }

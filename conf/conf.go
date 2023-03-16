@@ -16,12 +16,25 @@ var (
 	DbName     string
 )
 
+var (
+	EmailHost     string
+	EmailAddr     string
+	EmailPassword string
+)
+
+func LoadEmail(file *ini.File) {
+	EmailHost = file.Section("email").Key("EmailHost").String()
+	EmailAddr = file.Section("email").Key("EmailAddr").String()
+	EmailPassword = file.Section("email").Key("EmailPassword").String()
+}
+
 func Init() {
 	file, err := ini.Load("./conf/config.ini")
 	if err != nil {
 		fmt.Println("配置文件读取失败")
 	}
 
+	LoadEmail(file)
 	LoadMysql(file)
 
 	dns := strings.Join([]string{DbUser, ":", DbPassword, "@tcp(", DbHost, ":", DbPort, ")/", DbName, "?charset=utf8mb4&parseTime=true"}, "")

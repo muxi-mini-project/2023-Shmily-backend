@@ -1,14 +1,20 @@
 package service
 
 import (
+	"gopkg.in/gomail.v2"
+	"math/rand"
+	"shmily/conf"
 	"shmily/model"
 	"shmily/pkg/utils"
 	"shmily/serializer"
+	"strconv"
+	"time"
 )
 
 type UserService struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Email      string `json:"email" form:"email"`
+	Password   string `json:"password" form:"password"`
+	VerifyCode string `json:"verifyCode" form:"verifyCode"`
 }
 
 func (service *UserService) Login() serializer.Response {
@@ -41,6 +47,122 @@ func (service *UserService) Login() serializer.Response {
 		Status: 200,
 		Data:   token,
 		Msg:    "登陆成功",
+	}
+}
+
+func generateCode() string {
+	rand.Seed(time.Now().UnixNano()) //设置随机种子
+	return strconv.Itoa(rand.Intn(900000) + 100000)
+}
+
+var storeVerifyCode = make(map[string]string)
+
+func sendVerifyCode(email string) error {
+	// 随机生成验证码
+	code := generateCode()
+	storeVerifyCode[email] = code
+
+	// 创建新的电子邮件消息
+	m := gomail.NewMessage()
+
+	// 设置电子邮件消息的内容
+	m.SetHeader("From", conf.EmailAddr)
+	m.SetHeader("To", email)
+	m.SetHeader("Subject", "shmily注册验证码")
+	m.SetBody("text/plain", "您的邮箱注册验证码是："+code)
+
+	// 设置SMTP服务器信息
+	d := gomail.NewDialer(conf.EmailHost, 25, conf.EmailAddr, conf.EmailPassword)
+
+	// 发送电子邮件消息
+	if err := d.DialAndSend(m); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (service *UserService) RegisterSendVerifyCode() serializer.Response {
+	//1.验证邮箱是否注册
+	var user model.User
+	var count int
+	model.DB.Model(&model.User{}).Where("email=?", service.Email).First(&user).Count(&count)
+	if count == 1 {
+		//该邮箱已注册
+		return serializer.Response{
+			Status: 400,
+			Msg:    "该邮箱已注册",
+		}
+	}
+
+	//2.发送验证码
+	if err := sendVerifyCode(service.Email); err != nil {
+		return serializer.Response{
+			Status: 400,
+			Data:   err.Error(),
+			Msg:    "发送验证码失败",
+		}
+	}
+	return serializer.Response{
+		Status: 200,
+		//Data:   storeVerifyCode[service.Email],
+		Msg: "验证码已发送到邮箱",
+	}
+}
+
+func (service *UserService) ForgetPasswordSendVerifyCode() serializer.Response {
+	// 1. 验证邮箱是否已注册,没有注册的不能改密码
+	var user model.User
+	var count int
+	model.DB.Model(&model.User{}).Where("email=?", service.Email).First(&user).Count(&count)
+	if count != 1 {
+		return serializer.Response{
+			Status: 400,
+			Msg:    "该邮箱没有注册",
+		}
+	}
+	// 2. 发送验证码
+	if err := sendVerifyCode(service.Email); err != nil {
+		return serializer.Response{
+			Status: 400,
+			Data:   err.Error(),
+			Msg:    "发送验证码失败",
+		}
+	}
+	return serializer.Response{
+		Status: 200,
+		Msg:    "验证码已发送到邮箱",
+	}
+}
+
+func (service *UserService) ResetPassword() serializer.Response {
+	var user model.User
+	var count int
+	model.DB.Model(&model.User{}).Where("email=?", service.Email).First(&user).Count(&count)
+	if count == 1 {
+		user.SetPassword(service.Password)
+		model.DB.Model(&user).Update("password_digest", user.PasswordDigest)
+
+		return serializer.Response{
+			Status: 200,
+			Msg:    "修改密码成功",
+		}
+	}
+	return serializer.Response{
+		Status: 400,
+		Msg:    "修改密码失败",
+	}
+}
+
+func (service *UserService) Verify() serializer.Response {
+	if service.VerifyCode != storeVerifyCode[service.Email] {
+		return serializer.Response{
+			Status: 400,
+			Msg:    "验证码错误",
+		}
+	}
+	return serializer.Response{
+		Status: 200,
+		Msg:    "验证码正确",
 	}
 }
 

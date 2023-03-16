@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"shmily/service"
 )
@@ -24,6 +25,42 @@ func UserLogin(c *gin.Context) {
 	}
 }
 
+func UserRegisterSetPassword(c *gin.Context) {
+	var user service.UserService
+	err := c.ShouldBind(&user)
+	if err == nil {
+		res := user.Register()
+		c.JSON(200, res)
+	}
+}
+
+func UserForgetPassword(c *gin.Context) {
+	var user service.UserService
+	err := c.ShouldBind(&user)
+	if err == nil {
+		res := user.ForgetPasswordSendVerifyCode()
+		c.JSON(200, res)
+	}
+}
+
+func UserResetPassword(c *gin.Context) {
+	var user service.UserService
+	err := c.ShouldBind(&user)
+	if err == nil {
+		res := user.ResetPassword()
+		c.JSON(200, res)
+	}
+}
+
+func UserVerify(c *gin.Context) {
+	var user service.UserService
+	err := c.ShouldBind(&user)
+	if err == nil {
+		res := user.Verify()
+		c.JSON(200, res)
+	}
+}
+
 // @Summary      User register
 // @Description  get string by ID
 // @Tags         accounts
@@ -33,6 +70,17 @@ func UserLogin(c *gin.Context) {
 // @Success      200  {string}  string"{"msg": "登录成功"}"
 // @Failure      400  {string}  string"{"msg": "登录失败"}"
 // @Router       /api/v1/user/register [post]
+
+func UserRegisterByEmail(c *gin.Context) {
+	var user service.UserService
+	err := c.ShouldBind(&user)
+	if err == nil {
+		res := user.RegisterSendVerifyCode()
+		c.JSON(200, res)
+	} else {
+		fmt.Println(err.Error())
+	}
+}
 
 func UserRegister(c *gin.Context) {
 	var user service.UserService

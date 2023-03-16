@@ -6,8 +6,8 @@ import (
 )
 
 type CreateMemoService struct {
-	Content string `json:"content"`
-	Color   string `json:"color"`
+	Content string `json:"content" form:"content"`
+	Color   string `json:"color" form:"color"`
 }
 
 type ShowMemoService struct {

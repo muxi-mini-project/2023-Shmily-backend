@@ -7,8 +7,8 @@ import (
 )
 
 type CreateEventService struct {
-	Content string `json:"content"`
-	Date    string `json:"date"`
+	Content string `json:"content" form:"content"`
+	Date    string `json:"date" form:"date"`
 }
 
 func (service *CreateEventService) Create(uid uint) serializer.Response {
