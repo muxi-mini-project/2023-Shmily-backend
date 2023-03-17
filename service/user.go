@@ -52,7 +52,7 @@ func (service *UserService) Login() serializer.Response {
 
 func generateCode() string {
 	rand.Seed(time.Now().UnixNano()) //设置随机种子
-	return strconv.Itoa(rand.Intn(900000) + 100000)
+	return strconv.Itoa(rand.Intn(9000) + 1000)
 }
 
 var storeVerifyCode = make(map[string]string)
