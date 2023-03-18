@@ -12,3 +12,9 @@ type AboutLover struct {
 	Content  string `gorm:"type:longtext"`
 	ImageURL string
 }
+
+func (a *AboutLover) Create(uid uint) error {
+	err := DB.Create(&a).Error
+
+	return err
+}

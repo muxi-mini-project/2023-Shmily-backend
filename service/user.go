@@ -206,3 +206,7 @@ func (service *UserService) Register() serializer.Response {
 		Msg:    "注册成功",
 	}
 }
+
+func UpdateUserInfo(user model.User) error {
+	return user.UpdateInfo()
+}

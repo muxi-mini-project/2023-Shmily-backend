@@ -12,15 +12,17 @@ func NewRouter() *gin.Engine {
 	//路由组
 	v1 := r.Group("api/v1")
 	{
-		v1.POST("user/register", api.UserRegister)
-		v1.POST("user/register/email", api.UserRegisterByEmail)
-		v1.POST("user/verify", api.UserVerify)
-		v1.POST("user/password", api.UserRegisterSetPassword)
+		v1.POST("/user/register", api.UserRegister)
+		v1.POST("/user/register/email", api.UserRegisterByEmail)
+		v1.POST("/user/verify", api.UserVerify)
+		v1.POST("/user/password", api.UserRegisterSetPassword)
 
-		v1.POST("user/forget/password", api.UserForgetPassword)
-		v1.POST("user/reset/password", api.UserResetPassword)
+		v1.POST("/user/forget/password", api.UserForgetPassword)
+		v1.POST("/user/reset/password", api.UserResetPassword)
 
-		v1.POST("user/login", api.UserLogin)
+		v1.POST("/user/login", api.UserLogin)
+
+		v1.PUT("/user/set_info", api.SetInfo)
 
 		v1.POST("usr/verify", api.Verify)
 	}
@@ -43,6 +45,8 @@ func NewRouter() *gin.Engine {
 		authed.GET("memo/list", api.ListMemo)
 
 		authed.POST("event", api.CreateEvent)
+		authed.POST("about_lover", api.AboutLover)
+		authed.POST("letter", api.Letter)
 	}
 
 	return r

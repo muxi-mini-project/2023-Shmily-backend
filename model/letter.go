@@ -18,3 +18,9 @@ type Letter struct {
 	Nickname    string     //发件人昵称
 	Date        *time.Time //写信时间
 }
+
+func (l *Letter) Create(uid uint) error {
+	err := DB.Create(&Letter{}).Error
+
+	return err
+}

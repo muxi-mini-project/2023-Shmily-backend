@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"shmily/model"
 	"shmily/service"
 )
 
@@ -98,4 +99,30 @@ func UserRegister(c *gin.Context) {
 		// 3） 密码加密为密文
 		// 4) 保存到数据库
 	}
+}
+
+func SetInfo(c *gin.Context) {
+	var user model.User
+	err := c.ShouldBind(&user)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"status": "failed",
+			"msg":    "修改失败",
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	err = service.UpdateUserInfo(user)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"status": "failed",
+			"msg":    "修改失败",
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, "ok")
+
 }
