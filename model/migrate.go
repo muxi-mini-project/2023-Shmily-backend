@@ -14,6 +14,6 @@ func migration() {
 	DB.Model(&AboutLover{}).AddForeignKey("Uid", "User(id)", "CASCADE", "CASCADE")
 	DB.Model(&AboutLover{}).AddForeignKey("LoverUid", "User(id)", "CASCADE", "CASCADE")
 
-	DB.Model(&Friend{}).AddForeignKey("Uid", "User(id)", "CASCADE", "CASCADE")
-	DB.Model(&Friend{}).AddForeignKey("FriendUid", "User(id)", "CASCADE", "CASCADE")
+	//DB.Model(&Friend{}).AddForeignKey("Uid", "User(id)", "CASCADE", "CASCADE")
+	//DB.Model(&Friend{}).AddForeignKey("FriendUid", "User(id)", "CASCADE", "CASCADE")
 }

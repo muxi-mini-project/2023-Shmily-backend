@@ -13,8 +13,7 @@ import (
 // @Accept       json
 // @Produce      json
 // @Param		 event body service.CreateEventService true "纪念日"
-// @Success      200  {string}  string"{"msg": "创建成功"}"
-// @Failure      400  {string}  string"{"msg": "创建失败"}"
+// @Success      200  {string}  string"{"成功"}"
 // @Router       /api/v1/event [post]
 
 func CreateEvent(c *gin.Context) {

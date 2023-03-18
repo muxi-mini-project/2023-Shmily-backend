@@ -11,9 +11,8 @@ import (
 // @Tags         accounts
 // @Accept       json
 // @Produce      json
-// @Param        user   path      int  true  "Account ID"
-// @Success      200  {string}  string"{"msg": "创建成功"}"
-// @Failure      400  {string}  string"{"msg": "创建成功"}"
+// @Param        login_data   body  service.UserService  true  "Account ID"
+// @Success      200  {string}  string"{"成功"}"
 // @Router       /api/v1/user/login [post]
 
 func UserLogin(c *gin.Context) {
@@ -61,16 +60,6 @@ func UserVerify(c *gin.Context) {
 	}
 }
 
-// @Summary      User register
-// @Description  get string by ID
-// @Tags         accounts
-// @Accept       json
-// @Produce      json
-// @Param        id   path      int  true  "Account ID"
-// @Success      200  {string}  string"{"msg": "登录成功"}"
-// @Failure      400  {string}  string"{"msg": "登录失败"}"
-// @Router       /api/v1/user/register [post]
-
 func UserRegisterByEmail(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
@@ -81,6 +70,15 @@ func UserRegisterByEmail(c *gin.Context) {
 		fmt.Println(err.Error())
 	}
 }
+
+// @Summary      User register
+// @Description  get string by ID
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Param        register_data   body  service.UserService  true  "Account ID"
+// @Success      200  {string}  string"{"成功"}"
+// @Router       /api/v1/user/register [post]
 
 func UserRegister(c *gin.Context) {
 	var user service.UserService

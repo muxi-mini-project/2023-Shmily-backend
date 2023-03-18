@@ -8,14 +8,13 @@ import (
 	"shmily/service"
 )
 
-// @Summary      create a memo
+// @Summary      Create a memo
 // @Description  get a memo
 // @Tags         memos
 // @Accept       json
 // @Produce      json
 // @Param		 memo body service.CreateMemoService true "小纸条"
-// @Success      200  {string}  string"{"msg": "创建成功"}"
-// @Failure      400  {string}  string"{"msg": "创建失败"}"
+// @Success      200  {string}  string"{"成功"}
 // @Router       /api/v1/memo [post]
 
 func CreateMemo(c *gin.Context) {
@@ -44,8 +43,7 @@ func CreateMemo(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param		 memo body service.CreateMemoService true "小纸条"
-// @Success      200  {string}  string"{"msg": "查询成功"}"
-// @Failure      400  {string}  string"{"msg": "查询失败"}"
+// @Success      200  {string}  string"{"成功"}"
 // @Router       /api/v1/memo/:id [get]
 
 func ShowMemo(c *gin.Context) {
@@ -62,8 +60,7 @@ func ShowMemo(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param		 memo body service.CreateMemoService true "小纸条"
-// @Success      200  {string}  string"{"msg": "查询成功"}"
-// @Failure      400  {string}  string"{"msg": "查询失败"}"
+// @Success      200  {string}  string"{"查询成功"}"
 // @Router       /api/v1/memo/list [get]
 
 func ListMemo(c *gin.Context) {

@@ -6,16 +6,6 @@ import (
 	"shmily/middelware"
 )
 
-//func fun1(c *gin.Context) {
-//	fmt.Println("我是一个中间件函数1")
-//	//c.Abort() //后面的其他函数（如fun2）就不跑了
-//	c.Next()//整个项目全部跑完，再回到此处继续跑后面的fmt
-//	fmt.Println("fun1 end")
-//}
-//func fun2(c *gin.Context) {
-//	fmt.Println("我是一个中间件函数2")
-//}
-
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 
@@ -33,6 +23,16 @@ func NewRouter() *gin.Engine {
 		v1.POST("user/login", api.UserLogin)
 
 		v1.POST("usr/verify", api.Verify)
+	}
+
+	u := v1.Group("/friends")
+	u.Use(middleware.JWT())
+	{
+		u.GET("/get", api.MyFriends) //根据type 获得我的families or lovers or friends
+		u.POST("/friend_add", api.FriendsAdd)
+		u.GET("/new_friend_request", api.NewFriendsRequest) //刷新好友申请列表
+		u.POST("/AddedReflection", api.AddedReflection)     //对申请列表的消息同意或拒绝
+		u.GET("/user", api.IdToUser)
 	}
 
 	authed := v1.Group("/")
