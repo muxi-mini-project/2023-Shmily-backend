@@ -56,7 +56,7 @@ func UserVerify(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
 
-	println("前端数据：", user)
+	fmt.Printf("前端数据：%v\n", user)
 
 	if err == nil {
 		res := user.Verify()
@@ -68,7 +68,7 @@ func UserRegisterByEmail(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
 
-	println("前端数据：", user)
+	fmt.Printf("前端数据：%v\n", user)
 
 	if err == nil {
 		res := user.RegisterSendVerifyCode()
