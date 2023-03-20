@@ -55,6 +55,9 @@ func UserResetPassword(c *gin.Context) {
 func UserVerify(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
+
+	println("前端数据：", user)
+
 	if err == nil {
 		res := user.Verify()
 		c.JSON(200, res)
@@ -64,6 +67,9 @@ func UserVerify(c *gin.Context) {
 func UserRegisterByEmail(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
+
+	println("前端数据：", user)
+
 	if err == nil {
 		res := user.RegisterSendVerifyCode()
 		c.JSON(200, res)
