@@ -154,6 +154,8 @@ func (service *UserService) ResetPassword() serializer.Response {
 }
 
 func (service *UserService) Verify() serializer.Response {
+	println(service.VerifyCode)
+	println(storeVerifyCode[service.Email])
 	if service.VerifyCode != storeVerifyCode[service.Email] {
 		return serializer.Response{
 			Status: 400,

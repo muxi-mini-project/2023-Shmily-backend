@@ -24,7 +24,7 @@ func NewRouter() *gin.Engine {
 
 		v1.PUT("/user/set_info", api.SetInfo)
 
-		v1.POST("usr/verify", api.Verify)
+		//v1.POST("usr/verify", api.Verify)
 	}
 
 	u := v1.Group("/friends")
@@ -47,6 +47,7 @@ func NewRouter() *gin.Engine {
 		authed.POST("event", api.CreateEvent)
 		authed.POST("about_lover", api.AboutLover)
 		authed.POST("letter", api.Letter)
+		//authed.POST("map", api.GetMap)
 	}
 
 	return r
