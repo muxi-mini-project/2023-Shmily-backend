@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"shmily/model"
 	"shmily/service"
 )
@@ -56,7 +57,7 @@ func UserVerify(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
 
-	fmt.Printf("前端数据：%v\n", user)
+	log.Printf("前端数据：%v\n", user)
 
 	if err == nil {
 		res := user.Verify()
@@ -68,7 +69,7 @@ func UserRegisterByEmail(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
 
-	fmt.Printf("前端数据：%v\n", user)
+	log.Printf("前端数据：%v\n", user)
 
 	if err == nil {
 		res := user.RegisterSendVerifyCode()

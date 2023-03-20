@@ -47,7 +47,10 @@ func NewRouter() *gin.Engine {
 		authed.POST("event", api.CreateEvent)
 		authed.POST("about_lover", api.AboutLover)
 		authed.POST("letter", api.Letter)
-		//authed.POST("map", api.GetMap)
+
+		authed.POST("location/save", api.SaveLocation)
+		authed.GET("location/friend/:id", api.GetFriendLocation)
+		authed.GET("location/friends", api.GetFriendsLocations)
 	}
 
 	return r

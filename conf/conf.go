@@ -3,6 +3,8 @@ package conf
 import (
 	"fmt"
 	"gopkg.in/ini.v1"
+	"log"
+	"os"
 	"shmily/model"
 	"strings"
 )
@@ -37,6 +39,8 @@ func Init() {
 	LoadEmail(file)
 	LoadMysql(file)
 
+	SetupLogger()
+
 	dns := strings.Join([]string{DbUser, ":", DbPassword, "@tcp(", DbHost, ":", DbPort, ")/", DbName, "?charset=utf8mb4&parseTime=true"}, "")
 
 	model.Database(dns)
@@ -49,4 +53,9 @@ func LoadMysql(file *ini.File) {
 	DbUser = file.Section("mysql").Key("DbUser").String()
 	DbPassword = file.Section("mysql").Key("DbPassword").String()
 	DbName = file.Section("mysql").Key("DbName").String()
+}
+
+func SetupLogger() {
+	logFileLocation, _ := os.OpenFile("./shmily.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0744)
+	log.SetOutput(logFileLocation)
 }

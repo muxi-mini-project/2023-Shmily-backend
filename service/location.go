@@ -1,40 +1,54 @@
 package service
 
-import "shmily/serializer"
+import (
+	"shmily/model"
+	"shmily/serializer"
+	"strconv"
+)
 
 type LocationService struct {
+	Uid       uint    `json:"uid" form:"uid"`
 	PlaceName string  `json:"placeName" form:"placeName"`
+	Power     float64 `json:"power" form:"power"`
+	Time      string  `json:"time" form:"time"`
 	Latitude  float64 `json:"latitude" form:"latitude"`
 	Longitude float64 `json:"longitude" form:"longitude"`
-	Datetime  string  `json:"datetime" form:"datetime"`
-	Power     string  `json:"power" form:"json"`
 }
 
 // map[用户uid][用户位置信息]
 var storeLocation = make(map[uint]LocationService)
 
-func (service *LocationService) Save(uid uint) serializer.Response {
-	storeLocation[uid] = *service
+func (service *LocationService) Save() serializer.Response {
+	storeLocation[service.Uid] = *service
 	return serializer.Response{
 		Status: 200,
-		Msg:    "位置信息已保存",
+		Msg:    "保存位置信息成功",
 	}
 }
 
-func (service *LocationService) Get(uid uint) serializer.Response {
-	if value, ok := storeLocation[uid]; ok {
+func (service *LocationService) GetFriendLocation(uid uint) serializer.Response {
+	return serializer.Response{
+		Status: 200,
+		Data:   storeLocation[uid],
+	}
+}
+
+func (service *LocationService) GetFriendsLocations() serializer.Response {
+	friends, err := model.QueryFriends(service.Uid, "2")
+
+	if err == nil {
+		var locations []LocationService
+		for _, friend := range friends.Both {
+			id, _ := strconv.Atoi(friend)
+			locations = append(locations, storeLocation[uint(id)])
+		}
 		return serializer.Response{
 			Status: 200,
-			Data:   value,
-			Msg:    "成功获取位置信息",
+			Data:   locations,
 		}
 	}
 	return serializer.Response{
 		Status: 400,
-		Msg:    "获取位置信息失败",
+		Msg:    "查询好友位置失败",
 	}
 }
-
-//func (service *LocationService) GetFriendsLocations(uid uint) serializer.Response {
-//
-//}
