@@ -1,8 +1,8 @@
 package api
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"shmily/pkg/utils"
 	"shmily/serializer"
 	"shmily/service"
@@ -18,10 +18,11 @@ import (
 // @Router       /api/v1/memo [post]
 
 func CreateMemo(c *gin.Context) {
-	var memo service.CreateMemoService
+	var memo service.MemoService
 	if err := c.ShouldBind(&memo); err == nil {
 		//解析token 写到哪一个用户下面呢
 		claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+		log.Printf("CreateMemo api:email=%v memo=%v\n", claim.Email, memo)
 		//把小纸条数据保存到数据库中
 		res := memo.Create(claim.Id)
 		c.JSON(200, res)
@@ -47,10 +48,18 @@ func CreateMemo(c *gin.Context) {
 // @Router       /api/v1/memo/:id [get]
 
 func ShowMemo(c *gin.Context) {
-	var showMemo service.ShowMemoService
+	var showMemo service.MemoService
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
-	fmt.Println(c.Param("id"))
+	log.Printf("ShowMemo api:email=%v memoID%v\n", claim.Email, c.Param("id"))
 	res := showMemo.Show(claim.Id, c.Param("id"))
+	c.JSON(200, res)
+}
+
+func RandMemo(c *gin.Context) {
+	var randMemo service.MemoService
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	log.Printf("RandMemo api:email=%v\n", claim.Email)
+	res := randMemo.Rand(claim.Id)
 	c.JSON(200, res)
 }
 
@@ -63,9 +72,10 @@ func ShowMemo(c *gin.Context) {
 // @Success      200  {string}  string"{"查询成功"}"
 // @Router       /api/v1/memo/list [get]
 
-func ListMemo(c *gin.Context) {
-	var showMemo service.ShowMemoService
+func ListMemoId(c *gin.Context) {
+	var showMemo service.MemoService
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	log.Printf("ListMemo api:email=%v\n", claim.Email)
 	res := showMemo.List(claim.Id)
 	c.JSON(200, res)
 }

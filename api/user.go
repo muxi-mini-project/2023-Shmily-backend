@@ -20,6 +20,7 @@ import (
 func UserLogin(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
+	log.Printf("UserLogin api:%v\n", user)
 	if err == nil {
 		res := user.Login()
 		c.JSON(200, res)
@@ -29,6 +30,7 @@ func UserLogin(c *gin.Context) {
 func UserRegisterSetPassword(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
+	log.Printf("UserRegisterSetPassword api:%v\n", user)
 	if err == nil {
 		res := user.Register()
 		c.JSON(200, res)
@@ -38,6 +40,7 @@ func UserRegisterSetPassword(c *gin.Context) {
 func UserForgetPassword(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
+	log.Printf("UserForgetPassword api:%v\n", user)
 	if err == nil {
 		res := user.ForgetPasswordSendVerifyCode()
 		c.JSON(200, res)
@@ -47,6 +50,7 @@ func UserForgetPassword(c *gin.Context) {
 func UserResetPassword(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
+	log.Printf("UserResetPassword api:%v\n", user)
 	if err == nil {
 		res := user.ResetPassword()
 		c.JSON(200, res)
@@ -56,9 +60,7 @@ func UserResetPassword(c *gin.Context) {
 func UserVerify(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
-
-	log.Printf("前端数据：%v\n", user)
-
+	log.Printf("UserVerify api:%v\n", user)
 	if err == nil {
 		res := user.Verify()
 		c.JSON(200, res)
@@ -68,9 +70,7 @@ func UserVerify(c *gin.Context) {
 func UserRegisterByEmail(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
-
-	log.Printf("前端数据：%v\n", user)
-
+	log.Printf("UserRegisterByEmail api:%v\n", user)
 	if err == nil {
 		res := user.RegisterSendVerifyCode()
 		c.JSON(200, res)
@@ -91,6 +91,7 @@ func UserRegisterByEmail(c *gin.Context) {
 func UserRegister(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
+	log.Printf("UserRegister api:%v\n", user)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"status": "failed",
@@ -111,6 +112,7 @@ func UserRegister(c *gin.Context) {
 func SetInfo(c *gin.Context) {
 	var user model.User
 	err := c.ShouldBind(&user)
+	log.Printf("SetInfo api:%v\n", user)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"status": "failed",

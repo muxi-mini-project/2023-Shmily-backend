@@ -1,20 +1,20 @@
 package service
 
 import (
+	"math/rand"
 	"shmily/model"
 	"shmily/serializer"
+	"time"
 )
 
-type CreateMemoService struct {
+type MemoService struct {
 	Content string `json:"content" form:"content"`
 	Color   string `json:"color" form:"color"`
-}
-
-type ShowMemoService struct {
+	Date    string `json:"date" form:"date"`
 }
 
 // Create 写数据库，创建一个小纸条
-func (service *CreateMemoService) Create(id uint) serializer.Response {
+func (service *MemoService) Create(id uint) serializer.Response {
 	var user model.User
 	//通过id找到用户
 	model.DB.First(&user, id)
@@ -24,6 +24,7 @@ func (service *CreateMemoService) Create(id uint) serializer.Response {
 		Uid:     user.ID,
 		Color:   service.Color,
 		Content: service.Content,
+		Date:    service.Date,
 	}
 	//写入数据库
 	err := model.DB.Create(&memo).Error
@@ -39,7 +40,7 @@ func (service *CreateMemoService) Create(id uint) serializer.Response {
 	}
 }
 
-func (service *ShowMemoService) Show(uid uint, tid string) serializer.Response {
+func (service *MemoService) Show(uid uint, tid string) serializer.Response {
 	var memo model.Memo
 	err := model.DB.First(&memo, tid).Error
 	if err != nil || memo.Uid != uid {
@@ -56,7 +57,7 @@ func (service *ShowMemoService) Show(uid uint, tid string) serializer.Response {
 	}
 }
 
-func (service *ShowMemoService) List(uid uint) serializer.Response {
+func (service *MemoService) Rand(uid uint) serializer.Response {
 	var memos []model.Memo
 	err := model.DB.Model(&model.Memo{}).Preload("User").Where("uid=?", uid).Find(&memos).Error
 	if err != nil {
@@ -65,9 +66,35 @@ func (service *ShowMemoService) List(uid uint) serializer.Response {
 			Msg:    "查询失败",
 		}
 	}
+
+	rand.Seed(time.Now().UnixNano())
+	randomInt := rand.Intn(len(memos))
+
 	return serializer.Response{
 		Status: 200,
-		Data:   serializer.BuildMemos(memos),
+		Data:   serializer.BuildMemo(memos[randomInt]),
+		Msg:    "查询成功",
+	}
+}
+
+func (service *MemoService) List(uid uint) serializer.Response {
+	var memos []model.Memo
+	err := model.DB.Model(&model.Memo{}).Preload("User").Where("uid=?", uid).Find(&memos).Error
+	if err != nil {
+		return serializer.Response{
+			Status: 500,
+			Msg:    "查询失败",
+		}
+	}
+
+	var ids []uint
+	for _, item := range memos {
+		ids = append(ids, item.ID)
+	}
+
+	return serializer.Response{
+		Status: 200,
+		Data:   ids,
 		Msg:    "查询成功",
 	}
 }
