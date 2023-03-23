@@ -8,7 +8,9 @@ import (
 
 type User struct {
 	gorm.Model
-	Email          string     `gorm:"unique"`
+	Email          string `gorm:"unique"`
+	Nickname       string
+	Avatar         string
 	PasswordDigest string     //密码加密后的密文
 	Gender         string     //性别
 	Birthday       *time.Time //生日
@@ -25,4 +27,11 @@ func (user *User) SetPassword(password string) error {
 func (user *User) CheckPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(user.PasswordDigest), []byte(password))
 	return err == nil
+}
+
+func (user *User) UpdateInfo() error {
+	//err := DB.Save(&user).Error
+	// 根据 `struct` 更新属性，只会更新非零值的字段
+	err := DB.Model(&user).Updates(User{}).Error
+	return err
 }

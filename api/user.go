@@ -1,22 +1,97 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
+	"shmily/model"
 	"shmily/service"
 )
+
+// @Summary      User login
+// @Description  get string by ID
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Param        login_data   body  service.UserService  true  "Account ID"
+// @Success      200  {string}  string"{"成功"}"
+// @Router       /api/v1/user/login [post]
 
 func UserLogin(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
+	log.Printf("UserLogin api:%v\n", user)
 	if err == nil {
 		res := user.Login()
 		c.JSON(200, res)
 	}
 }
 
+func UserRegisterSetPassword(c *gin.Context) {
+	var user service.UserService
+	err := c.ShouldBind(&user)
+	log.Printf("UserRegisterSetPassword api:%v\n", user)
+	if err == nil {
+		res := user.Register()
+		c.JSON(200, res)
+	}
+}
+
+func UserForgetPassword(c *gin.Context) {
+	var user service.UserService
+	err := c.ShouldBind(&user)
+	log.Printf("UserForgetPassword api:%v\n", user)
+	if err == nil {
+		res := user.ForgetPasswordSendVerifyCode()
+		c.JSON(200, res)
+	}
+}
+
+func UserResetPassword(c *gin.Context) {
+	var user service.UserService
+	err := c.ShouldBind(&user)
+	log.Printf("UserResetPassword api:%v\n", user)
+	if err == nil {
+		res := user.ResetPassword()
+		c.JSON(200, res)
+	}
+}
+
+func UserVerify(c *gin.Context) {
+	var user service.UserService
+	err := c.ShouldBind(&user)
+	log.Printf("UserVerify api:%v\n", user)
+	if err == nil {
+		res := user.Verify()
+		c.JSON(200, res)
+	}
+}
+
+func UserRegisterByEmail(c *gin.Context) {
+	var user service.UserService
+	err := c.ShouldBind(&user)
+	log.Printf("UserRegisterByEmail api:%v\n", user)
+	if err == nil {
+		res := user.RegisterSendVerifyCode()
+		c.JSON(200, res)
+	} else {
+		fmt.Println(err.Error())
+	}
+}
+
+// @Summary      User register
+// @Description  get string by ID
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Param        register_data   body  service.UserService  true  "Account ID"
+// @Success      200  {string}  string"{"成功"}"
+// @Router       /api/v1/user/register [post]
+
 func UserRegister(c *gin.Context) {
 	var user service.UserService
 	err := c.ShouldBind(&user)
+	log.Printf("UserRegister api:%v\n", user)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"status": "failed",
@@ -32,4 +107,31 @@ func UserRegister(c *gin.Context) {
 		// 3） 密码加密为密文
 		// 4) 保存到数据库
 	}
+}
+
+func SetInfo(c *gin.Context) {
+	var user model.User
+	err := c.ShouldBind(&user)
+	log.Printf("SetInfo api:%v\n", user)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"status": "failed",
+			"msg":    "修改失败",
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	err = service.UpdateUserInfo(user)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"status": "failed",
+			"msg":    "修改失败",
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, "ok")
+
 }

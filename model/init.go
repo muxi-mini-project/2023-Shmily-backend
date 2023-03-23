@@ -10,13 +10,14 @@ import (
 var DB *gorm.DB
 
 func Database(dns string) {
+	//连接MySQL数据库
 	db, err := gorm.Open("mysql", dns)
-
 	if err != nil {
 		panic("Mysql连接错误")
 	} else {
 		fmt.Println("Mysql连接成功")
 	}
+
 	db.LogMode(true)
 	db.SingularTable(true)
 	db.DB().SetMaxIdleConns(20)

@@ -11,4 +11,5 @@ type Memo struct {
 	Uid     uint `gorm:"not null"`       //userid 属于某人(user)的
 	Color   string
 	Content string `gorm:"type:longtext"` //长字符串
+	Date    string
 }
