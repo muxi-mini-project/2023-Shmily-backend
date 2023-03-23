@@ -30,7 +30,8 @@ func (user *User) CheckPassword(password string) bool {
 }
 
 func (user *User) UpdateInfo() error {
-	err := DB.Save(&user).Error
-
+	//err := DB.Save(&user).Error
+	// 根据 `struct` 更新属性，只会更新非零值的字段
+	err := DB.Model(&user).Updates(User{}).Error
 	return err
 }
