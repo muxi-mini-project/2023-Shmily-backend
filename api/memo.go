@@ -18,6 +18,8 @@ import (
 // @Router       /api/v1/memo [post]
 
 func CreateMemo(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var memo service.MemoService
 	if err := c.ShouldBind(&memo); err == nil {
 		//解析token 写到哪一个用户下面呢
@@ -48,6 +50,8 @@ func CreateMemo(c *gin.Context) {
 // @Router       /api/v1/memo/:id [get]
 
 func ShowMemo(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var showMemo service.MemoService
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
 	log.Printf("ShowMemo api:email=%v memoID%v\n", claim.Email, c.Param("id"))
@@ -56,6 +60,8 @@ func ShowMemo(c *gin.Context) {
 }
 
 func RandMemo(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var randMemo service.MemoService
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
 	log.Printf("RandMemo api:email=%v\n", claim.Email)
@@ -73,6 +79,8 @@ func RandMemo(c *gin.Context) {
 // @Router       /api/v1/memo/list [get]
 
 func ListMemoId(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var showMemo service.MemoService
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
 	log.Printf("ListMemo api:email=%v\n", claim.Email)

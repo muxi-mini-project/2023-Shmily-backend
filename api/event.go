@@ -17,6 +17,8 @@ import (
 // @Router       /api/v1/event [post]
 
 func CreateEvent(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var event service.CreateEventService
 	err := c.ShouldBind(&event)
 	if err == nil {

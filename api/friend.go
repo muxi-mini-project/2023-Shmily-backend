@@ -18,6 +18,8 @@ import (
 // @Failure 200 {object} handler.Error  "{"msg":"获取失败"}"
 // @Router /api/v1/friends/get  [GET]
 func MyFriends(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	Type := c.Query("type")
 	ID := service.GetId(c)
 	//第一个参数自己的ID一般从token中获取（下同）  第二个参数是families or friends or lovers
@@ -48,6 +50,8 @@ func MyFriends(c *gin.Context) {
 // @Failure 200 {object} handler.Error  "{"msg":"请求failed"}"
 // @Router /api/v1/friends/friend_add [POST]
 func FriendsAdd(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	ID1 := service.GetId(c)
 	var r model.Relationship
 	c.ShouldBind(&r) // ID2 Type 和 num 的信息 扫入r中
@@ -90,6 +94,8 @@ func FriendsAdd(c *gin.Context) {
 // @Failure 200 {object} handler.Error  "{"msg":"请求申请列表失败"}"
 // @Router /api/v1/friends/new_friend_request [GET]
 func NewFriendsRequest(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	ID := service.GetId(c)
 	users, err := model.FriendsAddedRequest(ID)
 	fmt.Println(err)
@@ -119,6 +125,8 @@ func NewFriendsRequest(c *gin.Context) {
 // @Failure 200 {object} handler.Error  "{"msg":"请求失败"}"
 // @Router /api/v1/friends/AddedReflection [POST]
 func AddedReflection(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	ID := service.GetId(c)
 	ID2 := c.Query("id_object")
 	Msg := c.Query("msg")
@@ -150,6 +158,8 @@ func AddedReflection(c *gin.Context) {
 // @Param id  query string true "要查的对象id"
 // @Router /api/v1/friends/user [GET]
 func IdToUser(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	id := c.Query("id")
 	my_id := service.GetId(c)
 	s_my_id := fmt.Sprintf("%v", my_id)

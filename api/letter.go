@@ -8,6 +8,8 @@ import (
 )
 
 func Letter(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var letter model.Letter
 	err := c.ShouldBind(&letter)
 	if err != nil {

@@ -8,6 +8,8 @@ import (
 )
 
 func SaveLocation(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var myLocation service.LocationService
 	if err := c.ShouldBind(&myLocation); err == nil {
 		claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
@@ -18,6 +20,8 @@ func SaveLocation(c *gin.Context) {
 }
 
 func GetFriendLocation(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var myLocation service.LocationService
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
 	myLocation.Uid = claim.Id
@@ -27,6 +31,8 @@ func GetFriendLocation(c *gin.Context) {
 }
 
 func GetFriendsLocations(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var myLocation service.LocationService
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
 	myLocation.Uid = claim.Id

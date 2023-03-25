@@ -22,8 +22,6 @@ func NewRouter() *gin.Engine {
 
 		v1.POST("/user/login", api.UserLogin)
 
-		v1.PUT("/user/set_info", api.SetInfo)
-
 	}
 
 	u := v1.Group("/friends")
@@ -39,6 +37,11 @@ func NewRouter() *gin.Engine {
 	authed := v1.Group("/")
 	authed.Use(middleware.JWT())
 	{
+		authed.PUT("user/set_info", api.SetInfo)
+		authed.DELETE("user/delete", api.DeleteUserInfo)
+
+		authed.GET("search", api.Search)
+
 		authed.POST("memo", api.CreateMemo)
 		authed.GET("memo/:id", api.ShowMemo)
 		authed.GET("memo/rand", api.RandMemo)

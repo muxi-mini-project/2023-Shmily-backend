@@ -35,3 +35,13 @@ func (user *User) UpdateInfo() error {
 	err := DB.Model(&user).Updates(User{}).Error
 	return err
 }
+
+func UpdateAvatar(id uint, avatarPath string) error {
+	err := DB.Model(&User{}).Where("id = ?", id).Update("avatar", avatarPath).Error
+	return err
+}
+
+func DeleteUser(uid uint) error {
+	err := DB.Where("id=?", uid).Delete(&User{}).Error
+	return err
+}

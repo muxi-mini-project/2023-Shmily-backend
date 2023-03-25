@@ -18,6 +18,8 @@ import (
 // @Router       /api/v1/user/login [post]
 
 func UserLogin(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var user service.UserService
 	err := c.ShouldBind(&user)
 	log.Printf("UserLogin api:%v\n", user)
@@ -28,6 +30,8 @@ func UserLogin(c *gin.Context) {
 }
 
 func UserRegisterSetPassword(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var user service.UserService
 	err := c.ShouldBind(&user)
 	log.Printf("UserRegisterSetPassword api:%v\n", user)
@@ -38,6 +42,8 @@ func UserRegisterSetPassword(c *gin.Context) {
 }
 
 func UserForgetPassword(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var user service.UserService
 	err := c.ShouldBind(&user)
 	log.Printf("UserForgetPassword api:%v\n", user)
@@ -48,6 +54,8 @@ func UserForgetPassword(c *gin.Context) {
 }
 
 func UserResetPassword(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var user service.UserService
 	err := c.ShouldBind(&user)
 	log.Printf("UserResetPassword api:%v\n", user)
@@ -58,6 +66,8 @@ func UserResetPassword(c *gin.Context) {
 }
 
 func UserVerify(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var user service.UserService
 	err := c.ShouldBind(&user)
 	log.Printf("UserVerify api:%v\n", user)
@@ -68,6 +78,8 @@ func UserVerify(c *gin.Context) {
 }
 
 func UserRegisterByEmail(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var user service.UserService
 	err := c.ShouldBind(&user)
 	log.Printf("UserRegisterByEmail api:%v\n", user)
@@ -89,6 +101,8 @@ func UserRegisterByEmail(c *gin.Context) {
 // @Router       /api/v1/user/register [post]
 
 func UserRegister(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var user service.UserService
 	err := c.ShouldBind(&user)
 	log.Printf("UserRegister api:%v\n", user)
@@ -110,6 +124,28 @@ func UserRegister(c *gin.Context) {
 }
 
 func SetInfo(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
+	if c.Query("avatar") == "yes" {
+		urls, _ := model.UploadFile(c)
+		path := urls[0]
+		err := model.UpdateAvatar(service.GetId(c), path)
+		if err != nil {
+			c.JSON(400, gin.H{
+				"status": "failed",
+				"msg":    "修改失败",
+				"error":  err.Error(),
+			})
+			return
+		}
+		c.JSON(200, gin.H{
+			"status": "failed",
+			"msg":    "修改成功",
+			"error":  err.Error(),
+		})
+		return
+	}
+
 	var user model.User
 	err := c.ShouldBind(&user)
 	log.Printf("SetInfo api:%v\n", user)
@@ -134,4 +170,32 @@ func SetInfo(c *gin.Context) {
 
 	c.JSON(200, "ok")
 
+}
+
+func DeleteUserInfo(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
+	var user model.User
+	err := c.ShouldBind(&user)
+	log.Printf("DeleteUserInfo api:%v\n", user)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"Status": "failed",
+			"msg":    "注销失败",
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	err = model.DeleteUser(user.ID)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"Status": "failed",
+			"msg":    "注销失败",
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, "ok")
 }

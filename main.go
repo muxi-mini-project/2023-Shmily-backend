@@ -5,6 +5,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"shmily/conf"
 	_ "shmily/docs"
+	"shmily/model"
 	"shmily/routers"
 )
 
@@ -24,6 +25,9 @@ import (
 
 func main() {
 	conf.Init()
+
+	conf.Initi("/home/pro1/2023-Shmily-backend1/conf/config.yaml", "")
+	model.Load()
 
 	r := routers.NewRouter()
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

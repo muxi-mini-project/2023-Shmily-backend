@@ -8,6 +8,8 @@ import (
 )
 
 func AboutLover(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	var a model.AboutLover
 	err := c.ShouldBind(&a)
 	if err != nil {
