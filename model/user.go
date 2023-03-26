@@ -8,13 +8,13 @@ import (
 
 type User struct {
 	gorm.Model
-	Email          string `gorm:"unique"`
-	Nickname       string
-	Avatar         string
-	PasswordDigest string     //密码加密后的密文
-	Gender         string     //性别
-	Birthday       *time.Time //生日
-	Signature      string     //个性签名
+	Email          string     `gorm:"unique" json:"email" form:"email"`
+	Nickname       string     `json:"nickname" form:"nickname"`
+	Avatar         string     `json:"avatar" form:"avatar"`
+	PasswordDigest string     `json:"passwordDigest" form:"passwordDigest"` //密码加密后的密文
+	Gender         string     `json:"gender" form:"gender"`                 //性别
+	Birthday       *time.Time `json:"birthday" form:"birthday"`             //生日
+	Signature      string     `json:"signature" for,m:"signature"`          //个性签名
 }
 
 // SetPassword 密码加密
@@ -29,11 +29,18 @@ func (user *User) CheckPassword(password string) bool {
 	return err == nil
 }
 
-func (user *User) UpdateInfo() error {
-	//err := DB.Save(&user).Error
-	// 根据 `struct` 更新属性，只会更新非零值的字段
-	err := DB.Model(&user).Updates(User{}).Error
-	return err
+func (user *User) UpdateInfo(u User, id uint) error {
+	// 查询单个用户
+	if err := DB.Where("id = ?", id).First(user).Error; err != nil {
+		return err
+	}
+
+	// 更新用户信息
+	if err := DB.Model(&user).Updates(u).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func UpdateAvatar(id uint, avatarPath string) error {

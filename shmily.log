@@ -57,3 +57,25 @@
 2023/03/25 23:43:01 search api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>}      <nil> }
 2023/03/26 00:24:54 UserRegister api:{123@qq.com 123456 }
 2023/03/26 00:28:14 SetInfo api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>}      <nil> }
+2023/03/26 10:37:04 UserLogin api:{1@qq.com 123456 }
+2023/03/26 10:44:38 UserLogin api:{1@qq.com 123456 }
+2023/03/26 10:45:26 DeleteUserInfo api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 1@qq.com     <nil> }
+2023/03/26 10:47:18 SetInfo api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 1@qq.com w    <nil> }
+2023/03/26 10:47:18 record not found
+2023/03/26 10:49:17 SetInfo api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 1@qq.com w    <nil> }
+2023/03/26 10:49:17 record not found
+2023/03/26 10:53:03 SetInfo api:{{2 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 1@qq.com w    <nil> }
+2023/03/26 10:53:27 SetInfo api:{{2 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 1@qq.com w    <nil> }
+2023/03/26 10:53:49 SetInfo api:{{2 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 0@qq.com w    <nil> }
+2023/03/26 10:54:11 SetInfo api:{{2 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 0@qq.com w dsfhjsd   <nil> }
+2023/03/26 10:54:33 SetInfo api:{{2 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 0@qq.com w dsfhjsd  nv <nil> }
+2023/03/26 10:55:08 SetInfo api:{{2 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 0@qq.com w dsfhjsd  nv <nil> }
+2023/03/26 10:55:12 SetInfo api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 0@qq.com w dsfhjsd  nv <nil> }
+2023/03/26 10:55:15 SetInfo api:{{2 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 0@qq.com w dsfhjsd  nv <nil> }
+2023/03/26 10:56:05 SetInfo api:{{2 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 1@qq.com w dsfhjsd  nv <nil> }
+2023/03/26 11:07:35 SetInfo api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 1@qq.com w dsfhjsd  nv <nil> }
+2023/03/26 11:07:40 SetInfo api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 1@qq.com wwwww dsfhjsd  nv <nil> }
+2023/03/26 11:09:37 UserLogin api:{123@qq.com 123456 }
+2023/03/26 11:09:48 DeleteUserInfo api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>}      <nil> }
+2023/03/26 11:14:35 DeleteUserInfo api:3
+2023/03/26 11:16:25 UserLogin api:{123@qq.com 123456 }

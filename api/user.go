@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"shmily/model"
+	"shmily/pkg/utils"
 	"shmily/service"
 )
 
@@ -158,7 +159,8 @@ func SetInfo(c *gin.Context) {
 		return
 	}
 
-	err = service.UpdateUserInfo(user)
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	err = user.UpdateInfo(user, claim.Id)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"status": "failed",
@@ -175,19 +177,21 @@ func SetInfo(c *gin.Context) {
 func DeleteUserInfo(c *gin.Context) {
 	c.Header("Access-Control-Allow-Origin", "*")
 
-	var user model.User
-	err := c.ShouldBind(&user)
-	log.Printf("DeleteUserInfo api:%v\n", user)
-	if err != nil {
-		c.JSON(400, gin.H{
-			"Status": "failed",
-			"msg":    "注销失败",
-			"error":  err.Error(),
-		})
-		return
-	}
+	//var user model.User
+	//err := c.ShouldBind(&user)
+	//log.Printf("DeleteUserInfo api:%v\n", user)
+	//if err != nil {
+	//	c.JSON(400, gin.H{
+	//		"Status": "failed",
+	//		"msg":    "注销失败",
+	//		"error":  err.Error(),
+	//	})
+	//	return
+	//}
 
-	err = model.DeleteUser(user.ID)
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	log.Printf("DeleteUserInfo api:%v\n", claim.Id)
+	err := model.DeleteUser(claim.Id)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"Status": "failed",
