@@ -79,3 +79,22 @@
 2023/03/26 11:09:48 DeleteUserInfo api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>}      <nil> }
 2023/03/26 11:14:35 DeleteUserInfo api:3
 2023/03/26 11:16:25 UserLogin api:{123@qq.com 123456 }
+2023/03/26 11:56:24 Search api:{1@qq.com wwwww }
+2023/03/26 11:56:46 Search api:{ wwwww }
+2023/03/26 11:56:51 Search api:{1@qq.com  }
+2023/03/26 11:58:36 Search api:{123@qq.com  }
+2023/03/26 12:02:04 Search api:{123@qq.com  }
+2023/03/26 12:02:08 Search api:{ wwwww }
+2023/03/26 12:02:18 Search api:{1@qq.com  }
+2023/03/26 12:02:27 Search api:{ wwwww 2}
+2023/03/26 12:02:42 Search api:{123@qq.com  }
+2023/03/26 12:02:48 Search api:{1622284619@qq.com  }
+2023/03/26 12:03:03 Search api:{123@qq.com  }
+2023/03/26 12:03:32 Search api:{1@qq.com  }
+2023/03/26 12:04:29 Search api:{1@qq.com  }
+2023/03/26 12:04:33 Search api:{123@qq.com  }
+2023/03/26 12:04:39 Search api:{ wwwww }
+2023/03/26 12:04:51 Search api:{1622284619@qq.com wwwww }
+2023/03/26 12:05:29 UserRegister api:{2@qq.com 123456 }
+2023/03/26 12:05:44 SetInfo api:{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC <nil>} 2@qq.com  dsfhjsd  nv <nil> }
+2023/03/26 12:05:53 Search api:{2@qq.com  }

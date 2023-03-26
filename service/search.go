@@ -11,9 +11,9 @@ type UserSearch struct {
 	ID       string `json:"id" form:"id"`
 }
 
-func (service *UserSearch) SearchByEmail() serializer.Response {
+func (service *UserSearch) SearchByEmail(email string) serializer.Response {
 	var user model.User
-	err := model.DB.Where("email=?", service.Email).First(&user).Error
+	err := model.DB.Where("email=?", email).First(&user).Error
 	if err != nil {
 		return serializer.Response{
 			Status: 400,
@@ -23,14 +23,14 @@ func (service *UserSearch) SearchByEmail() serializer.Response {
 
 	return serializer.Response{
 		Status: 200,
-		Data:   service,
+		Data:   user,
 		Msg:    "用户查询成功",
 	}
 }
 
-func (service *UserSearch) SearchByNickname() serializer.Response {
+func (service *UserSearch) SearchByNickname(nickname string) serializer.Response {
 	var user model.User
-	err := model.DB.Where("nickname=?", service.Nickname).First(&user).Error
+	err := model.DB.Where("nickname=?", nickname).First(&user).Error
 	if err != nil {
 		return serializer.Response{
 			Status: 400,
@@ -40,14 +40,14 @@ func (service *UserSearch) SearchByNickname() serializer.Response {
 
 	return serializer.Response{
 		Status: 200,
-		Data:   service,
+		Data:   user,
 		Msg:    "用户查询成功",
 	}
 }
 
-func (service *UserSearch) SearchByID() serializer.Response {
+func (service *UserSearch) SearchByID(id string) serializer.Response {
 	var user model.User
-	err := model.DB.Where("id=?", service.ID).First(&user).Error
+	err := model.DB.Where("id=?", id).First(&user).Error
 	if err != nil {
 		return serializer.Response{
 			Status: 400,
@@ -57,7 +57,7 @@ func (service *UserSearch) SearchByID() serializer.Response {
 
 	return serializer.Response{
 		Status: 200,
-		Data:   service,
+		Data:   user,
 		Msg:    "用户查询成功",
 	}
 }
